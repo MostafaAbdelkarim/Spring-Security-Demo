@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/")
-public class TemplateController {
+public class TemplateController { // using thymeleaf to navigate throught pages using HTTP requests
 
     @GetMapping("login")
     public String getLogin()

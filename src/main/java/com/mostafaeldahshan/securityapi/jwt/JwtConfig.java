@@ -10,7 +10,7 @@ import javax.crypto.SecretKey;
 
 @Configuration
 @ConfigurationProperties(prefix = "application.jwt")
-public class JwtConfig {
+public class JwtConfig { // managing the secret key class
 
     private String secretKey;
     private String tokenPrefix;

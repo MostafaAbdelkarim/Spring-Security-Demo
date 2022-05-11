@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 
 public class JwtTokenVerifier extends OncePerRequestFilter {
 
+    // wiring the configuration and secretkey classes to TokenVerifier
     private final SecretKey secretKey;
     private final JwtConfig jwtConfig;
 
@@ -38,9 +39,9 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
-
+        // filtering requests by header values given
         String authorizationHeader = request.getHeader(jwtConfig.getAuthorizationHeader());
-
+        //checking if header is not matching user given token
         if (Strings.isNullOrEmpty(authorizationHeader) || !authorizationHeader.startsWith(jwtConfig.getTokenPrefix())) {
             filterChain.doFilter(request, response);
             return;
@@ -75,7 +76,7 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
         } catch (JwtException e) {
             throw new IllegalStateException(String.format("Token %s cannot be trusted", token));
         }
-
+        //managing transactional requests/responses throughout filters
         filterChain.doFilter(request, response);
     }
 }
